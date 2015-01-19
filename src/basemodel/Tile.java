@@ -5,7 +5,7 @@ public class Tile {
 	private int x;
 	private int y;
 	private boolean dirty = false;
-	private boolean occupied = false;
+	private int currentObstacles = 0;
 
 	public Tile(int x, int y){
 		this.x = x;
@@ -16,11 +16,13 @@ public class Tile {
 	public int getY(){ return y;}
 	public void setDirty(boolean state){ dirty = state;}
 	public boolean isDirty(){ return dirty;}
-	public void setOccupied(boolean state){ occupied = state;}
-	public boolean isOccupied(){return occupied;}
+	public void leaveTile(){ currentObstacles--;}
+	public void enterTile(){ currentObstacles++;}
+	public boolean isOccupied(){return currentObstacles>0;}
+	public int getOccupation(){return currentObstacles;}
 	
 	public String toString(){
-		return occupied ? "[e]" : (dirty ? "[.]" : "[ ]");
+		return "Tile ("+x+","+y+")";
 	}
 	
 }

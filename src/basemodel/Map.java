@@ -27,7 +27,7 @@ public class Map {
 		//Something requests a tile here, this method fullfils that request
 		for(Tile[] ts : tiles){
 			for(Tile t : ts){
-				if(t.isDirty()){
+				if(t.needsCleaning()){
 					return t;
 				}
 			}
@@ -47,14 +47,6 @@ public class Map {
 	
 	
 	public String toString(){
-		String output = "\n";
-		for(int y=0; y<tiles[0].length;y++){
-			for(int x=0; x<tiles.length;x++){
-				output += tiles[x][y].toString();
-			}
-			output += "\n";
-		}
-		
-		return output;
+		return "Map ("+tiles.length+"x"+tiles[0].length+")\nElves: "+elves.length;
 	}
 }

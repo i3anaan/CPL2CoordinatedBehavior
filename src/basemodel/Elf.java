@@ -1,10 +1,10 @@
 package basemodel;
 
-public class Elf {
+public class Elf implements Obstacle{
 
-	protected Map map;
-	public int x;
-	public int y;
+	private Map map;
+	private int x;
+	private int y;
 
 	// Have to open up a lot of visibility to let aspects use it
 	protected Tile targetTile;
@@ -25,10 +25,8 @@ public class Elf {
 
 	public void moveStep(int x, int y) {
 		if ((Math.abs(x - this.x) + Math.abs(y - this.y)) <= 1) {
-			map.getTile(this.x, this.y).setOccupied(false);
 			this.x = x;
 			this.y = y;
-			map.getTile(this.x, this.y).setOccupied(true);
 		} else {
 			// TODO Exception van maken
 			System.err
@@ -46,7 +44,22 @@ public class Elf {
 	}
 
 	public String toString() {
-		return "Elf(" + x + "," + y + ")" + "  Target: (" + targetTile.getX()
-				+ "," + targetTile.getY() + ")";
+		return "Elf(" + x + "," + y + ")" + (targetTile!=null ? ("  Target: (" + targetTile.getX()
+				+ "," + targetTile.getY() + ")") : "");
+	}
+
+	@Override
+	public Map getMap() {
+		return map;
+	}
+
+	@Override
+	public int getX() {
+		return x;
+	}
+
+	@Override
+	public int getY() {
+		return y;
 	}
 }
