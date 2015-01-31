@@ -33,7 +33,7 @@ public aspect Simulation {
 			moveTowardsTarget();
 			// Instantly clean
 			if (getX() == targetTile.getX() && getY() == targetTile.getY()) {
-				cleanCurrentTile(targetTile);
+				cleanTile(targetTile);
 			}
 		} else {
 			requestNewTarget();

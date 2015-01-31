@@ -25,7 +25,7 @@ public aspect Communicator {
 		}
 	}
 	
-	/*
+	
 	
 	pointcut obstacleStepCall(Obstacle obst,int x, int y): target(obst) && args(x,y) && call(* *.moveStep(..));
 	void around(Obstacle obst, int x, int y): obstacleStepCall(obst, x, y){
@@ -36,14 +36,12 @@ public aspect Communicator {
 		}
 	}
 	
-	
-	
-	
 	/*
-	 * Decided not to go with this, as it requires rewriting the pathing logic
-	pointcut obstacleRouting(Obstacle obst): target(obst) && call(* *.moveTowardsTarget(..));
-	void around(Obstacle obst) : obstacleRouting(obst){
-		//Rewrite pathing logic
+	pointcut cleanTile(Elf elf): target(elf) && call(* Elf.cleanCurrentTile(..));
+	after(Elf elf) returning: cleanTile(elf){
+		if(elf.targetTile==null){
+			elf.targetTile = elf.getMap().getDirtyTileToClean();
+		}
 	}
 	*/
 }

@@ -23,8 +23,6 @@ public class Map {
 	}
 	
 	public Tile getDirtyTileToClean(){
-		//Central command method
-		//Something requests a tile here, this method fullfils that request
 		for(Tile[] ts : tiles){
 			for(Tile t : ts){
 				if(t.needsCleaning()){
@@ -34,7 +32,6 @@ public class Map {
 		}
 		return null;
 	}
-	
 	public Elf[] getElves(){return elves;}
 	public Tile[][] getTiles(){ return tiles;}
 	public Tile getTile(int x, int y){
@@ -44,8 +41,6 @@ public class Map {
 			return null;
 		}
 	}
-	
-	
 	public String toString(){
 		return "Map ("+tiles.length+"x"+tiles[0].length+")\nElves: "+elves.length;
 	}

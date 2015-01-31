@@ -21,6 +21,8 @@ public class Tile {
 	public boolean isOccupied(){return currentObstacles>0;}
 	public int getOccupation(){return currentObstacles;}
 	
+	public boolean clean(){ dirty = false; return dirty;}
+	
 	public String toString(){
 		return "Tile ("+x+","+y+")";
 	}

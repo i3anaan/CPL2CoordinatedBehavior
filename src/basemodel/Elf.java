@@ -1,12 +1,10 @@
 package basemodel;
 
-public class Elf implements Obstacle{
+public class Elf implements Obstacle {
 
 	private Map map;
 	private int x;
 	private int y;
-
-	// Have to open up a lot of visibility to let aspects use it
 	protected Tile targetTile;
 
 	public Elf(Map map, int x, int y) {
@@ -16,21 +14,23 @@ public class Elf implements Obstacle{
 	}
 
 	public void moveTowardsTarget() {
-		if (x != targetTile.getX()) {
-			moveStep(x + Math.round(Math.signum(targetTile.getX() - x)), y);
-		} else if (y != targetTile.getY()) {
-			moveStep(x, y + Math.round(Math.signum(targetTile.getY() - y)));
+		try {
+			if (x != targetTile.getX()) {
+				moveStep(x + Math.round(Math.signum(targetTile.getX() - x)), y);
+			} else if (y != targetTile.getY()) {
+				moveStep(x, y + Math.round(Math.signum(targetTile.getY() - y)));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
-	public void moveStep(int x, int y) {
+	public void moveStep(int x, int y) throws IllegalMoveException {
 		if ((Math.abs(x - this.x) + Math.abs(y - this.y)) <= 1) {
 			this.x = x;
 			this.y = y;
 		} else {
-			// TODO Exception van maken
-			System.err
-					.println("Illegal move: elf is moving more than 1 tile per turn");
+			throw new IllegalMoveException();
 		}
 	}
 
@@ -38,14 +38,21 @@ public class Elf implements Obstacle{
 		targetTile = map.getDirtyTileToClean();
 	}
 
-	public void cleanCurrentTile(Tile tile) {
-		tile.setDirty(false);
-		targetTile = null;
+	public void cleanTile(Tile tile) {
+		if (tile.equals(targetTile) && !tile.clean()) {
+			targetTile = null;
+			requestNewTarget();
+		}
 	}
 
 	public String toString() {
-		return "Elf(" + x + "," + y + ")" + (targetTile!=null ? ("  Target: (" + targetTile.getX()
-				+ "," + targetTile.getY() + ")") : "");
+		return "Elf("
+				+ x
+				+ ","
+				+ y
+				+ ")"
+				+ (targetTile != null ? ("  Target: (" + targetTile.getX()
+						+ "," + targetTile.getY() + ")") : "");
 	}
 
 	@Override
@@ -61,5 +68,11 @@ public class Elf implements Obstacle{
 	@Override
 	public int getY() {
 		return y;
+	}
+
+	public class IllegalMoveException extends Exception {
+		public IllegalMoveException(){
+			super("Move is not allowed!");
+		}
 	}
 }
