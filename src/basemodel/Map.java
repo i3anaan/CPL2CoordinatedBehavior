@@ -18,7 +18,7 @@ public class Map {
 		
 		elves = new Elf[elfAmount];
 		for(int i=0;i<elfAmount;i++){
-			elves[i] = new Elf(this,0,0);
+			elves[i] = new Elf(this,((i+5)*2)%xdim,(i*2)%ydim);
 		}
 	}
 	

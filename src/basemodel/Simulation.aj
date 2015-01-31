@@ -6,7 +6,7 @@ public aspect Simulation {
 	
 	public static void main(String[] args) {
 		System.out.println("Starting Simulation");
-		Map map = new Map(15, 15, 20);
+		Map map = new Map(15, 15, 10);
 	}
 
 	public String Map.showSimulationState(){
@@ -53,6 +53,7 @@ public aspect Simulation {
 	pointcut mapMade(Map m): target(m) && execution(Map.new(..));
 
 	after(Map m): mapMade(m){
+		System.out.println("Start state:\n"+m.showSimulationState());
 		for (int i = 0; i < SIMULATION_STEPS; i++) {
 			System.out.println(">> SimulationStep " + i + " Start\n");
 			m.doSimulationStep();
