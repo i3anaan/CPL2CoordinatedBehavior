@@ -47,7 +47,7 @@ public aspect Communicator {
 			}
 		}
 		
-		if(allowed && !obst.getMap().getTile(x, y).isOccupied()){
+		if(allowed){
 			proceed(obst,x,y);
 		}else{
 			return;
